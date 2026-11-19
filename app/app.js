@@ -7,7 +7,33 @@ const titleInput = document.querySelector('#title');
 const descriptionInput = document.querySelector('#description');
 const bodyInput = document.querySelector('#body');
 const notice = document.querySelector('#notice');
+const githubSetup = {
+  id: 'github-setup',
+  title: 'Создать репозитории GitHub и включить Pages',
+  description: 'Даёт ссылки для создания приватного и публичного репозиториев, а также для включения GitHub Actions в настройках Pages.',
+  body: `Подготовь ссылки для создания двух отдельных репозиториев GitHub для проекта [НАЗВАНИЕ ПРОЕКТА]. Мой аккаунт GitHub — nicolenkoe.
+
+Предложи короткое имя проекта латиницей и сразу дай три кликабельные ссылки:
+
+1. Создать публичный репозиторий <имя-проекта>-downloads для сайта GitHub Pages, установщиков, инструкций и релизов.
+   Ссылка: https://github.com/new?name=<имя-проекта>-downloads&visibility=public
+   В форме я должен проверить, что выбран Public.
+
+2. Создать приватный репозиторий <имя-проекта> для исходников, тестов и инструкций по сборке.
+   Ссылка: https://github.com/new?name=<имя-проекта>&visibility=private
+   В форме я должен проверить, что выбран Private.
+
+3. Открыть настройки GitHub Pages публичного репозитория.
+   Ссылка: https://github.com/nicolenkoe/<имя-проекта>-downloads/settings/pages
+   После создания репозитория я открою эту ссылку и выберу Build and deployment → Source → GitHub Actions. Также дай прямую ссылку на вкладку Actions, где можно посмотреть ход публикации.
+
+Во всех ссылках подставь реальные имена без угловых скобок. Рядом укажи будущий публичный адрес сайта: https://nicolenkoe.github.io/<имя-проекта>-downloads/
+
+Когда я сообщу, что создал репозитории и выбрал GitHub Actions, проверь оба репозитория. Перед загрузкой исходников подтверди, что репозиторий приватный. Веди разработку в отдельной ветке development. Подготовь workflow публикации сайта в публичном репозитории и проверь общедоступный адрес после успешного запуска.`
+};
+const githubSetupMigration = 'prompt-library-github-setup-added';
 const starter = [
+  githubSetup,
   { id: 'text', title: 'Написать текст', description: 'Готовит письмо, пост или объявление под вашу аудиторию.', body: 'Напиши [письмо / пост / объявление] для [аудитория]. Цель — [желаемый результат]. Используй факты: [факты]. Тон — [тон]. Объём — до [число] слов.' },
   { id: 'compare', title: 'Сравнить варианты', description: 'Сравнивает два варианта по вашим критериям.', body: 'Сравни [вариант А] и [вариант Б] для задачи [цель]. Критерии по приоритету: [критерии]. Сделай короткую таблицу и объясни, когда лучше выбрать каждый вариант.' },
   { id: 'learn', title: 'Изучить тему', description: 'Объясняет тему на примере и предлагает упражнение.', body: 'Объясни [тему] человеку, который уже знает [что я знаю]. Начни с простого примера. Покажи, как применить это к [задача]. В конце дай одно упражнение и дождись моего ответа.' }
@@ -17,6 +43,14 @@ let editedId;
 try {
   const saved = localStorage.getItem(key);
   if (saved !== null) prompts = JSON.parse(saved);
+  if (localStorage.getItem(githubSetupMigration) === null) {
+    if (saved !== null && !prompts.some(prompt => prompt.id === githubSetup.id)) {
+      const updated = [githubSetup, ...prompts];
+      localStorage.setItem(key, JSON.stringify(updated));
+      prompts = updated;
+    }
+    localStorage.setItem(githubSetupMigration, '1');
+  }
 } catch {
   notice.textContent = 'Не удалось открыть сохранённую библиотеку.';
 }
