@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#172820">
+<title>Промпты удачные</title>
+<link rel="stylesheet" href="style.css">
+<script src="app.js" defer></script>
+</head>
+<body>
+<header><div class="wrap"><h1>Промпты удачные</h1><p>Личная библиотека промптов</p></div></header>
+<main class="wrap">
+<div class="toolbar"><label for="search">Поиск по библиотеке</label><div class="controls"><input id="search" type="search" placeholder="Название или текст"><button id="add" type="button">Новый промпт</button></div></div>
+<p id="notice" role="status"></p>
+<section id="library" aria-label="Сохранённые промпты"></section>
+</main>
+<dialog id="editor"><form id="form">
+<h2 id="editor-title">Новый промпт</h2>
+<label for="title">Название</label><input id="title" required maxlength="120">
+<label for="description">Короткое описание</label><input id="description" maxlength="180" placeholder="Что делает этот промпт?">
+<label for="body">Текст промпта</label><textarea id="body" rows="9" required></textarea>
+<div class="actions"><button type="button" id="close">Отмена</button><button>Сохранить</button></div>
+</form></dialog>
+</body></html>
