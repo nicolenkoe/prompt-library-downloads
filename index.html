@@ -6,10 +6,13 @@
 <title>Промпты удачные</title>
 <link rel="stylesheet" href="app/style.css">
 <link rel="stylesheet" href="site.css">
+<script src="site.js" defer></script>
 </head>
 <body>
 <header><div class="wrap"><h1>Промпты удачные</h1><p>Сохраняйте удачные запросы и вставляйте их в любой чат.</p>
 <a class="cta" href="app/">Открыть библиотеку</a>
+<a class="cta" href="files/prompt-library-0.1.0.apk" download>Скачать APK для Android</a>
+<a class="cta" id="instruction-link" href="#instruction">Видеоинструкция</a>
 </div></header>
 <main class="wrap">
 <section><h2>Библиотека под рукой</h2>
@@ -18,10 +21,26 @@
 </section>
 <section><h2>Первый запуск</h2>
 <ol><li>Откройте библиотеку в современном браузере.</li><li>Выберите готовую карточку или добавьте свой промпт с названием, описанием и текстом.</li><li>Нажмите «Копировать промпт» и вставьте текст в нужную ветку.</li></ol>
+<h3>На Android</h3>
+<ol><li>Скачайте APK на устройство с Android 8.0 или новее и актуальным Android System WebView.</li><li>Откройте APK и подтвердите установку. Если Android запросит разрешение на установку файлов из браузера, включите его в системных настройках.</li><li>Откройте «Промпты удачные» и выберите любую карточку.</li></ol>
 <p>Данные хранятся в браузере или на устройстве. Библиотеки на разных устройствах хранятся отдельно.</p>
 </section>
+<section id="instruction"><h2>Видеоинструкция</h2>
+<div class="player">
+<video id="video" controls playsinline preload="none" poster="media/instruction-poster.webp">
+<source src="media/instruction-v1.mp4" type="video/mp4">
+<track kind="captions" src="media/instruction.vtt" srclang="ru" label="Русский">
+</video>
+<button id="play" type="button" aria-label="Воспроизвести видео">▶</button>
+</div>
+<p><a href="media/instruction-v1.mp4">Открыть MP4</a> · <a href="media/instruction.vtt">Субтитры VTT</a></p>
+</section>
 <section><h2>Версии</h2>
-<p>Предварительная браузерная версия. Для Android готовится тестовая сборка для Android 8.0 и новее со свежим Android System WebView.</p>
+<h3>0.1.0 · 19 ноября 2026 · Тестовая</h3>
+<p>Добавлены карточки с коротким описанием, поиск, редактирование и копирование полного текста. Android проверяет обновления при запуске.</p>
+<p><a href="files/prompt-library-0.1.0.apk" download>APK 0.1.0</a> · 21 091 байт</p>
+<p class="checksum">SHA-256 <code>692f115b888a0831f8433890d4d42727d895f7a3db9bb66beffc277431ed0581</code></p>
+<p>Функции браузера, подпись и версия APK проверены автоматически. Установку и первый запуск Android нужно проверить на устройстве.</p>
 </section>
 </main>
 </body>

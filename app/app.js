@@ -114,4 +114,9 @@ form.addEventListener('submit', event => {
 search.addEventListener('input', render);
 document.querySelector('#add').addEventListener('click', () => openEditor());
 document.querySelector('#close').addEventListener('click', () => editor.close());
+if (window.PromptAndroid) {
+  const updateSettings = document.querySelector('#update-settings');
+  updateSettings.hidden = false;
+  updateSettings.addEventListener('click', () => window.PromptAndroid.updateSettings());
+}
 render();

@@ -1,3 +1,7 @@
 .cta { display: inline-block; margin: .7rem 0 1rem; background: #b5f1c8; color: #172820; text-decoration: none; font-weight: 700; padding: .65rem 1rem; border-radius: .55rem; }
 section { margin-bottom: 2.2rem; }
 img, video { display: block; width: 100%; height: auto; border-radius: .85rem; border: 1px solid #d6e0d7; }
+.player { position: relative; }
+#play { position: absolute; display: grid; place-items: center; inset: 50% auto auto 50%; transform: translate(-50%, -50%); border-radius: 50%; width: 4.8rem; height: 4.8rem; background: #285741; color: white; font-size: 2rem; border: 2px solid white; }
+#play[hidden] { display: none; }
+.checksum { overflow-wrap: anywhere; }
