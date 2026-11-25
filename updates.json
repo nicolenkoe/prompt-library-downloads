@@ -1,5 +1,14 @@
 [
   {
+    "version": "0.1.2",
+    "versionCode": 3,
+    "status": "test",
+    "date": "2026-11-25",
+    "size": 29283,
+    "sha256": "e9b108546df91cf5ffd9ce7ba6c9de6126da173f9f58601c2e0f5f3d8b93c9b5",
+    "url": "https://github.com/nicolenkoe/prompt-library-downloads/releases/download/v0.1.2/prompt-library.apk"
+  },
+  {
     "version": "0.1.1",
     "versionCode": 2,
     "status": "test",

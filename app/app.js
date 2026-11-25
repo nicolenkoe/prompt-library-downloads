@@ -62,6 +62,8 @@ const androidTestTemplates = [
 const releaseTemplate = projectTemplates.find(card => card.id === 'github-release');
 const previousReleaseBody = releaseTemplate.body;
 releaseTemplate.body += '\n\n' + "Любое порученное изменение доводи до новой версии в рамках текущей задачи. Самостоятельно увеличь номер версии, собери и проверь затронутые платформы, опубликуй релиз на GitHub, обнови сайт и проверь публичные ссылки. После публикации сообщи номер версии и ссылки в чате и отправь письмо. Отдельной команды «жду новую версию» и повторного подтверждения не требуется. Если публикация заблокирована, сообщи причину и что уже готово.";
+const releaseBodyBeforeVersionCheck = releaseTemplate.body;
+releaseTemplate.body += '\n\n' + "На главном экране показывай текущий номер версии. По нажатию на номер сразу проверяй обновления вручную и показывай результат. При наличии новой версии предложи обновиться. На Android используй тот же механизм проверки и установки, что при автоматической проверке. В браузере проверяй опубликованную версию и предложи перезагрузить страницу.";
 const templateMigrations = [
   { key: 'prompt-library-github-setup-added', cards: [githubSetup] },
   { key: 'prompt-library-project-templates-added', cards: projectTemplates },
@@ -91,7 +93,7 @@ try {
     localStorage.setItem(migration.key, '1');
   }
   const releaseIndex = prompts.findIndex(prompt =>
-    prompt.id === releaseTemplate.id && prompt.body === previousReleaseBody);
+    prompt.id === releaseTemplate.id && [previousReleaseBody, releaseBodyBeforeVersionCheck].includes(prompt.body));
   if (saved !== null && releaseIndex !== -1) {
     const updated = [...prompts];
     updated[releaseIndex] = { ...updated[releaseIndex], body: releaseTemplate.body };
@@ -201,3 +203,33 @@ if (window.PromptAndroid) {
   updateSettings.addEventListener('click', () => window.PromptAndroid.updateSettings());
 }
 render();
+
+const versionButton = document.querySelector('#check-version');
+versionButton.addEventListener('click', async () => {
+  if (window.PromptAndroid) {
+    window.PromptAndroid.checkUpdates();
+    return;
+  }
+  versionButton.disabled = true;
+  notice.textContent = 'Проверяем обновления…';
+  try {
+    const response = await fetch('../web-version.json', { cache: 'no-store' });
+    if (!response.ok) throw new Error('Version lookup failed');
+    const published = await response.json();
+    if (!Number.isSafeInteger(published.build)) throw new Error('Invalid version');
+    if (published.build > Number(versionButton.dataset.build)) {
+      notice.textContent = 'Доступна версия ' + published.version + '.';
+      if (confirm(notice.textContent + ' Обновить страницу?')) {
+        const url = new URL(location.href);
+        url.searchParams.set('version', published.version);
+        location.assign(url);
+      }
+    } else {
+      notice.textContent = 'У вас последняя версия.';
+    }
+  } catch {
+    notice.textContent = 'Не удалось проверить обновления.';
+  } finally {
+    versionButton.disabled = false;
+  }
+});
